@@ -1,0 +1,26 @@
+{
+	"storyName": "Tankman",
+	"difficulties": "Erect, Nightmare",
+	"hideFreeplay": false,
+	"weekBackground": "tank",
+	"weekBefore": "weekend1",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"senpai",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"Ugh-erect",
+			"tankman",
+			[
+				246,
+				182,
+				4
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "Week 7 Erect"
+}

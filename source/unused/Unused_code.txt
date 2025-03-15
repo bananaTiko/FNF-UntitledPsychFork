@@ -1,0 +1,8 @@
+//galleryState.hx
+		// ["check-mark_oPG7Xo5", "", "Press enter to play sound effect.", 2],
+		// ["queen-never-cry-made-with-Voicemod", "", "Press enter to play sound effect.", 2],
+		// ["spongebob-stinky-sound-effect-made-with-Voicemod", "", "Press enter to play sound effect.", 2],
+		// ["Opening", "", "Press enter to play sound effect.", 2],
+		// ["Reflection-EncoreInfinitum", "", "Press enter to play sound effect.", 2],
+		// ["audioexample", "Audio Example", "Press enter to play a sound effect.", 2],
+		// ["musicexample", "Audio Example 2", "Press enter to play a song.", 3]

@@ -1,0 +1,8 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Associate .hxs script files with Haxe syntax highlighting
+*.hxs linguist-language=Haxe
+
+# Associate .hscript script files with Haxe syntax highlighting
+*.hscript linguist-language=Haxe

@@ -1,0 +1,44 @@
+{
+	"storyName": "Hating simulator ft. moawling",
+	"difficulties": "Erect, Nightmare",
+	"hideFreeplay": false,
+	"weekBackground": "christmas",
+	"weekBefore": "week5-E",
+	"startUnlocked": true,
+	"weekCharacters": [
+		"senpai",
+		"bf",
+		"gf"
+	],
+	"songs": [
+		[
+			"senpai-erect",
+			"senpai-pixel",
+			[
+				255,
+				120,
+				191
+			]
+		],
+		[
+			"roses-erect",
+			"senpai-pixel",
+			[
+				255,
+				120,
+				191
+			]
+		],
+		[
+			"thorns-erect",
+			"spirit-pixel",
+			[
+				255,
+				120,
+				191
+			]
+		]
+	],
+	"hideStoryMode": true,
+	"weekName": "Week 6 Erect"
+}
