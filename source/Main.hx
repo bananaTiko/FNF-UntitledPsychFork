@@ -298,7 +298,7 @@ class Main extends Sprite
 		focusMusicTween = FlxTween.tween(FlxG.sound, {volume: oldVol}, 0.5);
 	}
 
-	#if windows
+
 	public static function startOfTrace(fileName:String, lineNumber:Int) {
 		// so its like:    [03:17:48] [debug/GPUStats:75] Traced string yeah
 		// and colors are:    blue           cyan            basic (white)
@@ -307,7 +307,6 @@ class Main extends Sprite
 
 		return '$time $path ';
 	}
-	#end
 
 	public static function println(str:Dynamic) {
 		#if js
