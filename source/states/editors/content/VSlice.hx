@@ -462,8 +462,8 @@ class VSlice
 		}
 		var metadata:VSliceMetadata = {
 			songName: songData.song,
-			artist: songData.composer,
-			charter: songData.charter,
+			artist: composer,
+			charter: charter,
 			playData: {
 				difficulties: diffs,
 				characters: {
