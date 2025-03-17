@@ -162,6 +162,8 @@ class PauseSubState extends MusicBeatSubstate
 		regenMenu();
 		cameras = [FlxG.cameras.list[FlxG.cameras.list.length - 1]];
 
+		artistTxtTween(); // should start the artist txt fade 
+
 		super.create();
 	}
 	
