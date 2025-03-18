@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=PsychEngine
+Comment=A fork of Psych Engine with more modability
+Icon=io.github.BT2.fnf-UntitledPsychFork
+Exec=FNF-UPF-Release
+Categories=Game
+
