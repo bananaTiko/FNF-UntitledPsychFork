@@ -62,7 +62,7 @@ jobs:
         run: echo "${{ github.run_id }}" > VERSION
         shell: ${{ matrix.shell }}
 
-- name: Compile 64-bit ${{ matrix.name }}
+      - name: Compile 64-bit ${{ matrix.name }}
         run: |
           haxelib run lime build Project.xml ${{ 
             matrix.name == 'Windows' && 'windows' || 
