@@ -4,10 +4,29 @@ on:
   push:
     branches: [ main, Main, experimental, Experimental ]
   workflow_dispatch:
-
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      os:
+        required: true
+        type: string
+      setupScript:
+        required: true
+        type: string
+      buildArgs:
+        required: true
+        type: string
+      artifactName:
+        required: true
+        type: string
+      artifactPath:
+        required: true
+        type: string
 jobs:
   call-linux-64bit:
-    uses: .github/workflows/master.yml@experimental
+    uses: ./.github/workflows/Master.yml
     with:
       os: ubuntu-latest
       setupScript: |
@@ -21,7 +40,7 @@ jobs:
       artifactPath: export/release/linux/64bit/bin
 
   call-linux-32bit:
-    uses: .github/workflows/master.yml@experimental
+    uses: ./.github/workflows/Master.yml
     with:
       os: ubuntu-latest
       setupScript: |
