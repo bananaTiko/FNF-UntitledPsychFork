@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-linux-64bit:
-    uses: .github/workflows/build.yml@experimental
+    uses: .github/workflows/master.yml@experimental
     with:
       os: ubuntu-latest
       setupScript: |
@@ -21,7 +21,7 @@ jobs:
       artifactPath: export/release/linux/64bit/bin
 
   call-linux-32bit:
-    uses: .github/workflows/build.yml@experimental
+    uses: .github/workflows/master.yml@experimental
     with:
       os: ubuntu-latest
       setupScript: |
