@@ -28,7 +28,7 @@ on:
 
 jobs:
   call-windows-64bit:
-    uses: .github/workflows/build.yml@experimental
+    uses: ./.github/workflows/Master.yml
     with:
       os: windows-latest
       setupScript: |
@@ -40,7 +40,7 @@ jobs:
       artifactPath: export/release/windows/64bit/bin
 
   call-windows-32bit:
-    uses: .github/workflows/build.yml@experimental
+    uses: ./.github/workflows/Master.yml
     with:
       os: windows-latest
       setupScript: |
