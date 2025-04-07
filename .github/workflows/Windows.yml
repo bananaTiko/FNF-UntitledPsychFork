@@ -27,7 +27,7 @@ on:
         type: string
 
 jobs:
-  call-windows-64bit:
+  build-windows-64bit:
     uses: ./.github/workflows/Master.yml
     with:
       os: windows-latest
@@ -39,7 +39,7 @@ jobs:
       artifactName: UPF-windowsBuild-64bit
       artifactPath: export/release/windows/64bit/bin
 
-  call-windows-32bit:
+  build-windows-32bit:
     uses: ./.github/workflows/Master.yml
     with:
       os: windows-latest
