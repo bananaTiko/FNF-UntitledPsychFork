@@ -2,11 +2,105 @@ name: Build
 
 on:
   push:
-    branches: [ main, Main, experimental, Experimental ]
+    branches: [Main, Experimental, main, experimental]
   pull_request:
-    branches: [ main, Main, experimental, Experimental ]
+    branches: [Main, Experimental, main, experimental]
   workflow_dispatch:
 
 jobs:
-  find-master:
-    uses: ./.github/workflows/Master.yml
+  BuildMatrix:
+    name: Build ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: Windows
+            os: windows-latest
+            setupScript: .\"setup/windows.bat"
+            shell: cmd
+            artifacts:
+              x86: export/release/windows/bin32
+              x64: export/release/windows/bin64
+
+          - name: Linux
+            os: ubuntu-latest
+            setupScript: sh ./setup/unix.sh
+            shell: bash
+            artifacts:
+              x86: export/release/linux/bin32
+              x64: export/release/linux/bin64
+
+          - name: macOS
+            os: macos-latest
+            setupScript: sh ./setup/unix.sh
+            shell: bash
+            artifacts:
+              x86: export/release/macos/bin32
+              x64: export/release/macos/bin64
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.1
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.4
+
+      - name: Install Haxelib and Dependencies
+        run: |
+          haxelib setup ${{ runner.temp }}/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          ${{ matrix.setupScript }}
+        shell: ${{ matrix.shell }}
+
+      - name: Skip SScript setup mode
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ${{ runner.temp }}/settings.cocoa
+        shell: ${{ matrix.shell }}
+
+      - name: Create Version Tag
+        run: echo "${{ github.run_id }}" > VERSION
+        shell: ${{ matrix.shell }}
+
+- name: Compile 64-bit ${{ matrix.name }}
+        run: |
+          haxelib run lime build Project.xml ${{ 
+            matrix.name == 'Windows' && 'windows' || 
+            matrix.name == 'Linux' && 'linux' || 
+            'mac' 
+          }} \
+          -D officialBuild \
+          -D HXCPP_M64 \
+          -D message.reporting=pretty \
+          -D HXCPP_GC_BIG_BLOCKS \
+          -D hscriptPos \
+          -D HXCPP_CATCH_SEGV \
+          --app-version="4.0.0-${{ github.run_id }}"
+        shell: ${{ matrix.shell }}
+
+      - name: Compile 32-bit ${{ matrix.name }}
+        run: |
+          haxelib run lime build Project.xml ${{ 
+            matrix.name == 'Windows' && 'windows' || 
+            matrix.name == 'Linux' && 'linux' || 
+            'mac' 
+          }} \
+          -D officialBuild \
+          -D message.reporting=pretty \
+          -D HXCPP_GC_BIG_BLOCKS \
+          -D hscriptPos \
+          -D HXCPP_CATCH_SEGV \
+          --app-version="4.0.0-${{ github.run_id }}"
+        shell: ${{ matrix.shell }}
+
+      - name: Upload 64-bit Artifact
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: UPF-${{ matrix.name }}-x64
+          path: ${{ matrix.artifacts.x64 }}
+
+      - name: Upload 32-bit Artifact
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: UPF-${{ matrix.name }}-x86
+          path: ${{ matrix.artifacts.x86 }}
