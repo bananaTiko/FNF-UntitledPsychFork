@@ -1,0 +1,31 @@
+name: Build-Windows
+
+on:
+  push:
+    branches: [ main, Main, experimental, Experimental ]
+  workflow_dispatch:
+
+jobs:
+  call-windows-64bit:
+    uses: .github/workflows/build.yml@experimental
+    with:
+      os: windows-latest
+      setupScript: |
+        haxelib setup C:/haxelib
+        haxelib install hxcpp > /dev/null --quiet
+        .\setup\windows.bat
+      buildArgs: windows -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV
+      artifactName: UPF-windowsBuild-64bit
+      artifactPath: export/release/windows/64bit/bin
+
+  call-windows-32bit:
+    uses: .github/workflows/build.yml@experimental
+    with:
+      os: windows-latest
+      setupScript: |
+        haxelib setup C:/haxelib
+        haxelib install hxcpp > /dev/null --quiet
+        .\setup\windows.bat
+      buildArgs: windows -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV -D HXCPP_32BIT
+      artifactName: UPF-windowsBuild-32bit
+      artifactPath: export/release/windows/32bit/bin
