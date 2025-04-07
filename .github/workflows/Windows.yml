@@ -5,6 +5,27 @@ on:
     branches: [ main, Main, experimental, Experimental ]
   workflow_dispatch:
 
+  workflow_call:
+    inputs:
+      name:
+        required: true
+        type: string
+      os:
+        required: true
+        type: string
+      setupScript:
+        required: true
+        type: string
+      buildArgs:
+        required: true
+        type: string
+      artifactName:
+        required: true
+        type: string
+      artifactPath:
+        required: true
+        type: string
+
 jobs:
   call-windows-64bit:
     uses: .github/workflows/build.yml@experimental
