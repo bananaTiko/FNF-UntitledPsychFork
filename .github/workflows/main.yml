@@ -29,20 +29,37 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install Haxelib and Setup
-        run: |
-          haxelib setup $RUNNER_TEMP/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          if [ "${{ matrix.name }}" = "Linux" ] || [ "${{ matrix.name }}" = "macOS" ]; then
-            chmod +x ./setup/unix.sh
-            ./setup/unix.sh
-          fi
-        shell: bash
+      # --- Platform-specific setup ---
 
       - name: Windows Setup
         if: matrix.name == 'Windows'
-        run: .\setup\windows.bat
+        run: |
+          haxelib setup %TEMP%\haxelib
+          haxelib install hxcpp > NUL
+          .\setup\windows.bat
         shell: cmd
+
+      - name: Linux Setup
+        if: matrix.name == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install libvlc-dev libvlccore-dev -y
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
+        shell: bash
+
+      - name: macOS Setup
+        if: matrix.name == 'macOS'
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
+        shell: bash
+
+      # --- Shared steps ---
 
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> $RUNNER_TEMP/settings.cocoa
