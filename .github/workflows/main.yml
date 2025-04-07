@@ -8,36 +8,23 @@ on:
   workflow_dispatch:
 
 jobs:
-  BuildMatrix:
-    name: Build ${{ matrix.name }}
-    runs-on: ${{ matrix.os }}
+  BuildMatrix_Windows:
+    name: Build Windows - ${{ matrix.arch }}
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: cmd
     strategy:
       matrix:
         include:
-          - name: Windows
-            os: windows-latest
+          - arch: x64
             setupScript: .\setup\windows.bat
-            shell: cmd
-            artifacts:
-              x86: export/release/windows/bin32
-              x64: export/release/windows/bin64
-
-          - name: Linux
-            os: ubuntu-latest
-            setupScript: ./setup/unix.sh
-            shell: bash
-            artifacts:
-              x86: export/release/linux/bin32
-              x64: export/release/linux/bin64
-
-          - name: macOS
-            os: macos-latest
-            setupScript: ./setup/unix.sh
-            shell: bash
-            artifacts:
-              x86: export/release/macos/bin32
-              x64: export/release/macos/bin64
-
+            buildArgs: "windows -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV -D HXCPP_M64"
+            artifactPath: export\release\windows\bin64\*
+          - arch: x86
+            setupScript: .\setup\windows.bat
+            buildArgs: "windows -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV"
+            artifactPath: export\release\windows\bin32\*
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4.2.1
@@ -47,60 +34,111 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      - name: Install Haxelib and Dependencies
+      - name: Install Haxelib and Run Setup Script
         run: |
-          haxelib setup ${{ runner.temp }}/haxelib
-          haxelib install hxcpp > /dev/null --quiet
-          ${{ matrix.setupScript }}
-        shell: ${{ matrix.shell }}
+          haxelib setup %TEMP%\haxelib
+          haxelib install hxcpp > NUL
+          % (echo off & call) %{{ matrix.setupScript }}
+      # Note: For Windows, the default shell is cmd,
+      # so no need to specify "shell:" here.
 
-      - name: Skip SScript setup mode
-        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ${{ runner.temp }}/settings.cocoa
-        shell: ${{ matrix.shell }}
+      - name: Skip SScript Setup Mode
+        run: echo oy9:showMacroty8:loopCosti25y10:includeAllfg >> %TEMP%\settings.cocoa
 
       - name: Create Version Tag
-        run: echo "${{ github.run_id }}" > VERSION
-        shell: ${{ matrix.shell }}
+        run: echo %GITHUB_RUN_ID% > VERSION
 
-      - name: Compile 64-bit ${{ matrix.name }}
+      - name: Compile 64-bit
         run: |
-          haxelib run lime build Project.xml ${{ 
-            matrix.name == 'Windows' && 'windows' || 
-            matrix.name == 'Linux' && 'linux' || 
-            'mac' 
-          }} \
-          -D officialBuild \
-          -D HXCPP_M64 \
-          -D message.reporting=pretty \
-          -D HXCPP_GC_BIG_BLOCKS \
-          -D hscriptPos \
-          -D HXCPP_CATCH_SEGV \
-          --app-version="4.0.0-${{ github.run_id }}"
-        shell: ${{ matrix.shell }}
-
-      - name: Compile 32-bit ${{ matrix.name }}
+          haxelib run lime build Project.xml windows -D officialBuild -D HXCPP_M64 -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV --app-version="4.0.0-%GITHUB_RUN_ID%"
+          
+      - name: Compile 32-bit
         run: |
-          haxelib run lime build Project.xml ${{ 
-            matrix.name == 'Windows' && 'windows' || 
-            matrix.name == 'Linux' && 'linux' || 
-            'mac' 
-          }} \
-          -D officialBuild \
-          -D message.reporting=pretty \
-          -D HXCPP_GC_BIG_BLOCKS \
-          -D hscriptPos \
-          -D HXCPP_CATCH_SEGV \
-          --app-version="4.0.0-${{ github.run_id }}"
-        shell: ${{ matrix.shell }}
+          haxelib run lime build Project.xml windows -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV --app-version="4.0.0-%GITHUB_RUN_ID%"
 
       - name: Upload 64-bit Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
-          name: UPF-${{ matrix.name }}-x64
-          path: ${{ matrix.artifacts.x64 }}
+          name: UPF-Windows-x64
+          path: ${{ matrix.artifactPath }}
+          # (Assuming the x64 build output goes to the bin64 folder)
 
       - name: Upload 32-bit Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
+          name: UPF-Windows-x86
+          path: ${{ matrix.artifactPath }}
+
+  BuildMatrix_Unix:
+    name: Build ${{ matrix.os }} - ${{ matrix.arch }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            name: Linux
+            arch: x64
+            setupScript: ./setup/unix.sh
+            buildArgs: "linux -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV -D HXCPP_M64"
+            artifactPath: export/release/linux/bin64/*
+          - os: ubuntu-latest
+            name: Linux
+            arch: x86
+            setupScript: ./setup/unix.sh
+            buildArgs: "linux -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV"
+            artifactPath: export/release/linux/bin32/*
+          - os: macos-latest
+            name: macOS
+            arch: x64
+            setupScript: ./setup/unix.sh
+            buildArgs: "mac -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV -D HXCPP_M64"
+            artifactPath: export/release/macos/bin64/*
+          - os: macos-latest
+            name: macOS
+            arch: x86
+            setupScript: ./setup/unix.sh
+            buildArgs: "mac -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV"
+            artifactPath: export/release/macos/bin32/*
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.2.1
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.4
+
+      - name: Install Haxelib and Run Setup Script
+        run: |
+          haxelib setup ${RUNNER_TEMP}/haxelib
+          haxelib install hxcpp > /dev/null
+          ${matrix.setupScript}
+      - name: Skip SScript Setup Mode
+        run: echo "oy9:showMacroty8:loopCosti25y10:includeAllfg" >> ${RUNNER_TEMP}/settings.cocoa
+
+      - name: Create Version Tag
+        run: echo "${GITHUB_RUN_ID}" > VERSION
+
+      - name: Compile 64-bit
+        run: |
+          haxelib run lime build Project.xml $(
+            if [ "${{ matrix.name }}" = "Linux" ]; then echo "linux"; else echo "mac"; fi
+          ) -D officialBuild -D HXCPP_M64 -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV --app-version="4.0.0-${GITHUB_RUN_ID}"
+      - name: Compile 32-bit
+        run: |
+          haxelib run lime build Project.xml $(
+            if [ "${{ matrix.name }}" = "Linux" ]; then echo "linux"; else echo "mac"; fi
+          ) -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV --app-version="4.0.0-${GITHUB_RUN_ID}"
+      - name: Upload 64-bit Artifact
+        uses: actions/upload-artifact@v4.3.4
+        with:
+          name: UPF-${{ matrix.name }}-x64
+          path: ${{ matrix.artifactPath }}
+      - name: Upload 32-bit Artifact
+        uses: actions/upload-artifact@v4.3.4
+        with:
           name: UPF-${{ matrix.name }}-x86
-          path: ${{ matrix.artifacts.x86 }}
+          path: ${{ matrix.artifactPath }}
