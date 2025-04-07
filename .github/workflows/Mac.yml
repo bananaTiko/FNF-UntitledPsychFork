@@ -1,0 +1,25 @@
+name: Build-macOS
+
+on:
+  push:
+    branches: [ main, Main, experimental, Experimental ]
+  workflow_dispatch:
+
+jobs:
+  call-mac-64bit:
+    uses: .github/workflows/build.yml@experimental
+    with:
+      os: macos-latest
+      setupScript: chmod +x ./setup/macos.sh && ./setup/macos.sh
+      buildArgs: mac -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV
+      artifactName: UPF-macBuild-64bit
+      artifactPath: export/release/macos/64bit/bin
+
+  call-mac-32bit:
+    uses: .github/workflows/build.yml@experimental
+    with:
+      os: macos-latest
+      setupScript: chmod +x ./setup/macos.sh && ./setup/macos.sh
+      buildArgs: mac -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV -D HXCPP_32BIT
+      artifactName: UPF-macBuild-32bit
+      artifactPath: export/release/macos/32bit/bin
