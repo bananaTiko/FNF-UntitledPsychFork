@@ -16,7 +16,7 @@ jobs:
         include:
           - name: Windows
             os: windows-latest
-            setupScript: .\"setup/windows.bat"
+            setupScript: .\setup\windows.bat
             shell: cmd
             artifacts:
               x86: export/release/windows/bin32
@@ -24,7 +24,7 @@ jobs:
 
           - name: Linux
             os: ubuntu-latest
-            setupScript: sh ./setup/unix.sh
+            setupScript: ./setup/unix.sh
             shell: bash
             artifacts:
               x86: export/release/linux/bin32
@@ -32,7 +32,7 @@ jobs:
 
           - name: macOS
             os: macos-latest
-            setupScript: sh ./setup/unix.sh
+            setupScript: ./setup/unix.sh
             shell: bash
             artifacts:
               x86: export/release/macos/bin32
