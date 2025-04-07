@@ -9,4 +9,4 @@ on:
 
 jobs:
   call-master:
-    uses: ./.github/workflows/master.yml
+    uses: ./.github/workflows/Master.yml
