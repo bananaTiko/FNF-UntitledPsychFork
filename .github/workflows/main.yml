@@ -1,14 +1,5 @@
-name: Build
-
-on:
-  push:
-    branches: [Main, Experimental, main, experimental]
-  pull_request:
-    branches: [Main, Experimental, main, experimental]
-  workflow_dispatch: {}
-
 jobs:
-  build:
+  build_64bit:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -29,7 +20,7 @@ jobs:
         with:
           haxe-version: 4.3.4
 
-      # --- Platform-specific setup ---
+      # --- Platform-specific setup for 64-bit ---
 
       - name: Windows Setup
         if: matrix.name == 'Windows'
@@ -59,7 +50,7 @@ jobs:
           sh ./setup/unix.sh
         shell: bash
 
-      # --- Shared steps ---
+      # --- Shared steps for 64-bit build ---
 
       - name: Skip SScript setup mode
         run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> $RUNNER_TEMP/settings.cocoa
@@ -77,30 +68,129 @@ jobs:
             --app-version="4.0.0-${{ github.run_id }}"
         shell: bash
 
-      - name: Compile 32-bit
+      - name: Check if 64-bit files exist
         run: |
-          PLATFORM=${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'mac' }}
-          haxelib run lime build Project.xml $PLATFORM \
-            -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV \
-            --app-version="4.0.0-${{ github.run_id }}"
+          echo "Checking 64-bit output for Windows"
+          ls -la export/release/windows
         shell: bash
 
-      # --- Upload Artifacts ---
+  upload_64bit:
+    runs-on: ${{ matrix.os }}
+    needs: build_64bit
+    strategy:
+      matrix:
+        include:
+          - name: Windows
+            os: windows-latest
+          - name: Linux
+            os: ubuntu-latest
+          - name: macOS
+            os: macos-latest
 
+    steps:
       - name: Upload 64-bit Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
           name: UPF-${{ matrix.name }}-x64
           path: |
-            ${{ matrix.name == 'Windows' && 'export/release/windows/bin64' || '' }}
-            ${{ matrix.name == 'Linux' && 'export/release/linux/bin64' || '' }}
-            ${{ matrix.name == 'macOS' && 'export/release/macos/bin64' || '' }}
+            ${{ matrix.name == 'Windows' && 'export/release/windows/bin' || '' }}
+            ${{ matrix.name == 'Linux' && 'export/release/linux/bin' || '' }}
+            ${{ matrix.name == 'macOS' && 'export/release/macos/bin' || '' }}
 
+  build_32bit:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          - name: Windows
+            os: windows-latest
+          - name: Linux
+            os: ubuntu-latest
+          - name: macOS
+            os: macos-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4.1.1
+
+      - name: Setup Haxe
+        uses: krdlab/setup-haxe@master
+        with:
+          haxe-version: 4.3.4
+
+      # --- Platform-specific setup for 32-bit ---
+
+      - name: Windows Setup
+        if: matrix.name == 'Windows'
+        run: |
+          haxelib setup %TEMP%\haxelib
+          haxelib install hxcpp > NUL
+          .\setup\windows.bat
+        shell: cmd
+
+      - name: Linux Setup
+        if: matrix.name == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install libvlc-dev libvlccore-dev -y
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
+        shell: bash
+
+      - name: macOS Setup
+        if: matrix.name == 'macOS'
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
+        shell: bash
+
+      # --- Shared steps for 32-bit build ---
+
+      - name: Skip SScript setup mode
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> $RUNNER_TEMP/settings.cocoa
+        shell: bash
+
+      - name: Create Version Tag
+        run: echo "${{ github.run_id }}" > VERSION
+        shell: bash
+
+      - name: Compile 32-bit
+        run: |
+          PLATFORM=${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'mac' }}
+          haxelib run lime build Project.xml $PLATFORM \
+            -D officialBuild -D HXCPP_M32 -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV \
+            --app-version="4.0.0-${{ github.run_id }}"
+        shell: bash
+
+      - name: Check if 32-bit files exist
+        run: |
+          echo "Checking 32-bit output for Windows"
+          ls -la export/release/windows
+        shell: bash
+
+  upload_32bit:
+    runs-on: ${{ matrix.os }}
+    needs: build_32bit
+    strategy:
+      matrix:
+        include:
+          - name: Windows
+            os: windows-latest
+          - name: Linux
+            os: ubuntu-latest
+          - name: macOS
+            os: macos-latest
+
+    steps:
       - name: Upload 32-bit Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
           name: UPF-${{ matrix.name }}-x86
           path: |
-            ${{ matrix.name == 'Windows' && 'export/release/windows/bin32' || '' }}
-            ${{ matrix.name == 'Linux' && 'export/release/linux/bin32' || '' }}
-            ${{ matrix.name == 'macOS' && 'export/release/macos/bin32' || '' }}
+            ${{ matrix.name == 'Windows' && 'export/release/windows/bin' || '' }}
+            ${{ matrix.name == 'Linux' && 'export/release/linux/bin' || '' }}
+            ${{ matrix.name == 'macOS' && 'export/release/macos/bin' || '' }}
