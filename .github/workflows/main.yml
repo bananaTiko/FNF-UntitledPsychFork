@@ -15,7 +15,7 @@ jobs:
         include:
           - name: Windows
             os: windows-latest
-            setupScript: .\"setup/windows.bat"
+            setupScript: ".\\setup\\windows.bat"
             shell: cmd
             artifacts:
               x86: export/release/windows/bin32
