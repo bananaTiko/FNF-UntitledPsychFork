@@ -5,7 +5,7 @@ on:
     branches: [Main, Experimental, main, experimental]
   pull_request:
     branches: [Main, Experimental, main, experimental]
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -15,96 +15,92 @@ jobs:
         include:
           - name: Windows
             os: windows-latest
-            setupScript: ".\\setup\\windows.bat"
-            shell: cmd
-            artifacts:
-              x86: export/release/windows/bin32
-              x64: export/release/windows/bin64
           - name: Linux
             os: ubuntu-latest
-            setupScript: |
-              sudo apt-get install libvlc-dev
-              sudo apt-get install libvlccore-dev
-              haxelib setup ~/haxelib
-              haxelib install hxcpp > /dev/null --quiet
-              chmod +x ./setup/unix.sh
-              sh ./setup/unix.sh
-            shell: bash
-            artifacts:
-              x86: export/release/linux/bin32
-              x64: export/release/linux/bin64
           - name: macOS
             os: macos-latest
-            setupScript: |
-              haxelib setup ~/haxelib
-              haxelib install hxcpp > /dev/null --quiet
-              chmod +x ./setup/unix.sh
-              sh ./setup/unix.sh
-            shell: bash
-            artifacts:
-              x86: export/release/macos/bin32
-              x64: export/release/macos/bin64
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4.2.1
+        uses: actions/checkout@v4.1.1
 
       - name: Setup Haxe
         uses: krdlab/setup-haxe@master
         with:
           haxe-version: 4.3.4
 
-      - name: Install Dependencies
-        run: ${{ matrix.setupScript }}
-        shell: ${{ matrix.shell }}
+      # --- Platform-specific setup ---
+
+      - name: Windows Setup
+        if: matrix.name == 'Windows'
+        run: |
+          haxelib setup %TEMP%\haxelib
+          haxelib install hxcpp > NUL
+          .\setup\windows.bat
+        shell: cmd
+
+      - name: Linux Setup
+        if: matrix.name == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install libvlc-dev libvlccore-dev -y
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
+        shell: bash
+
+      - name: macOS Setup
+        if: matrix.name == 'macOS'
+        run: |
+          haxelib setup ~/haxelib
+          haxelib install hxcpp > /dev/null --quiet
+          chmod +x ./setup/unix.sh
+          sh ./setup/unix.sh
+        shell: bash
+
+      # --- Shared steps ---
 
       - name: Skip SScript setup mode
-        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> ${{ runner.temp }}/settings.cocoa
-        shell: ${{ matrix.shell }}
+        run: echo 'oy9:showMacroty8:loopCosti25y10:includeAllfg' >> $RUNNER_TEMP/settings.cocoa
+        shell: bash
 
       - name: Create Version Tag
         run: echo "${{ github.run_id }}" > VERSION
-        shell: ${{ matrix.shell }}
+        shell: bash
 
-      - name: Compile 64-bit ${{ matrix.name }}
+      - name: Compile 64-bit
         run: |
-          haxelib run lime build Project.xml ${{ 
-            matrix.name == 'Windows' && 'windows' || 
-            matrix.name == 'Linux' && 'linux' || 
-            'mac' 
-          }} \
-          -D officialBuild \
-          -D HXCPP_M64 \
-          -D message.reporting=pretty \
-          -D HXCPP_GC_BIG_BLOCKS \
-          -D hscriptPos \
-          -D HXCPP_CATCH_SEGV \
-          --app-version="4.0.0-${{ github.run_id }}"
-        shell: ${{ matrix.shell }}
+          PLATFORM=${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'mac' }}
+          haxelib run lime build Project.xml $PLATFORM \
+            -D officialBuild -D HXCPP_M64 -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV \
+            --app-version="4.0.0-${{ github.run_id }}"
+        shell: bash
 
-      - name: Compile 32-bit ${{ matrix.name }}
+      - name: Compile 32-bit
         run: |
-          haxelib run lime build Project.xml ${{ 
-            matrix.name == 'Windows' && 'windows' || 
-            matrix.name == 'Linux' && 'linux' || 
-            'mac' 
-          }} \
-          -D officialBuild \
-          -D message.reporting=pretty \
-          -D HXCPP_GC_BIG_BLOCKS \
-          -D hscriptPos \
-          -D HXCPP_CATCH_SEGV \
-          --app-version="4.0.0-${{ github.run_id }}"
-        shell: ${{ matrix.shell }}
+          PLATFORM=${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'mac' }}
+          haxelib run lime build Project.xml $PLATFORM \
+            -D officialBuild -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV \
+            --app-version="4.0.0-${{ github.run_id }}"
+        shell: bash
+
+      # --- Upload Artifacts ---
 
       - name: Upload 64-bit Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
           name: UPF-${{ matrix.name }}-x64
-          path: ${{ matrix.artifacts.x64 }}
+          path: |
+            ${{ matrix.name == 'Windows' && 'export/release/windows/bin64' || '' }}
+            ${{ matrix.name == 'Linux' && 'export/release/linux/bin64' || '' }}
+            ${{ matrix.name == 'macOS' && 'export/release/macos/bin64' || '' }}
 
       - name: Upload 32-bit Artifact
         uses: actions/upload-artifact@v4.3.4
         with:
           name: UPF-${{ matrix.name }}-x86
-          path: ${{ matrix.artifacts.x86 }}
+          path: |
+            ${{ matrix.name == 'Windows' && 'export/release/windows/bin32' || '' }}
+            ${{ matrix.name == 'Linux' && 'export/release/linux/bin32' || '' }}
+            ${{ matrix.name == 'macOS' && 'export/release/macos/bin32' || '' }}
