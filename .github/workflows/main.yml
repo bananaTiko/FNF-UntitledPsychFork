@@ -1,3 +1,20 @@
+name: Build and Upload Artifacts
+
+on:
+  push:
+    branches: 
+      - Main
+      - Experimental
+      - main
+      - experimental
+  pull_request:
+    branches: 
+      - Main
+      - Experimental
+      - main
+      - experimental
+  workflow_dispatch: {}
+
 jobs:
   build_64bit:
     runs-on: ${{ matrix.os }}
@@ -181,7 +198,7 @@ jobs:
           - name: Windows
             os: windows-latest
           - name: Linux
-            os: ubuntu-latest
+            os: ubuntu-lest
           - name: macOS
             os: macos-latest
 
