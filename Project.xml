@@ -68,7 +68,7 @@
     <!-- _____________________________ Path Settings ____________________________ -->
 
     <set name="BUILD_DIR" value="export/debug" if="debug" />
-    <set name="BUILD_DIR" value="export/release" unless="debug" />
+    <set name="BUILD_DIR" value="export/release" unless="debug 32bits" />
     <set name="BUILD_DIR" value="export/32bit" if="32bits" />
 
     <classpath name="source" />
@@ -184,13 +184,16 @@
 	<!--hxcpp stuff-->
     
     <!-- Uses larger memory blocks for the garbage collector. This can improve performance by reducing fragmentation but may use more memory overall. -->
-    <haxedef name="HXCPP_GC_BIG_BLOCKS" />
+    <haxedef name="HXCPP_GC_BIG_BLOCKS" unless="32bits"/>
 
     <!-- Enables handling of segmentation faults (SEGV). This can help catch memory access violations and provide more meaningful error messages, but can also affect performance. -->
     <haxedef name="HXCPP_CATCH_SEGV" />
 
+    <!-- allows hxcpp in 32bit builds -->
+    <haxedef name="-D HXCPP_M32" if="32bits"/>
+
     <!-- Enables debug linking for the desktop target. This can provide additional debug information but may increase the size of the build and slow down execution. Only enabled when building for desktop platforms. -->
-    <haxedef name='HXCPP_DEBUG_LINK' if='debug'/>
+    <haxedef name="HXCPP_DEBUG_LINK" if="debug"/>
 	
 	<!-- No deprecation warnings. Credits to Boxfunkin(Soul Engine)-->
 	<haxedef name="no-deprecation-warnings"/>
