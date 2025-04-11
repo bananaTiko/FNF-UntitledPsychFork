@@ -49,8 +49,8 @@ jobs:
       - name: Linux Setup
         if: matrix.name == 'Linux'
         run: |
-          sudo apt-get update
-          sudo apt-get install libvlc-dev libvlccore-dev -y
+          sudo apt-get install libvlc-dev
+          sudo apt-get install libvlccore-dev
           haxelib setup ~/haxelib
           haxelib install hxcpp > /dev/null --quiet
           chmod +x ./setup/unix.sh
@@ -108,9 +108,9 @@ jobs:
         with:
           name: UPF-${{ matrix.name }}-x64
           path: |
-            ${{ matrix.name == 'Windows' && 'export\release\windows\bin' || '' }}
-            ${{ matrix.name == 'Linux' && './export/release/' || '' }}
-            ${{ matrix.name == 'macOS' && './export/release/' || '' }}
+            ${{ matrix.name == 'Windows' && 'export/release/windows/bin' || '' }}
+            ${{ matrix.name == 'Linux' && 'export/release/linux/bin' || '' }}
+            ${{ matrix.name == 'macOS' && 'export/release/macos/bin' || '' }}
 
   build_32bit:
     runs-on: ${{ matrix.os }}
@@ -204,6 +204,6 @@ jobs:
         with:
           name: UPF-${{ matrix.name }}-x86
           path: |
-            ${{ matrix.name == 'Windows' && 'export\32bit\windows\bin' || '' }}
-            ${{ matrix.name == 'Linux' && './export/32bit/' || '' }}
-            ${{ matrix.name == 'macOS' && './export/32bit/' || '' }}
+            ${{ matrix.name == 'Windows' && 'export/32bit/windows/bin' || '' }}
+            ${{ matrix.name == 'Linux' && 'export/32bit/linux/bin' || '' }}
+            ${{ matrix.name == 'macOS' && 'export/32bit/macos/bin' || '' }}
