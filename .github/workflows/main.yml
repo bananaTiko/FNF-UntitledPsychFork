@@ -174,7 +174,7 @@ jobs:
         run: |
           PLATFORM=${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'mac' }}
           haxelib run lime build Project.xml $PLATFORM \
-            -D officialBuild -D HXCPP_M32 -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV \
+            -32 -D officialBuild -D HXCPP_M32 -D message.reporting=pretty -D HXCPP_GC_BIG_BLOCKS -D hscriptPos -D HXCPP_CATCH_SEGV \
             --app-version="4.0.0-${{ github.run_id }}"
         shell: bash
 
