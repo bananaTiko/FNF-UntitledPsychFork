@@ -1,4 +1,4 @@
-name: Compile Untitled Psych Fork
+name: Build
 
 on:
   push:
@@ -82,12 +82,12 @@ jobs:
             --app-version="4.0.0-${{ github.run_id }}"
         shell: bash
 
-      - name: Check 64-bit Output
-        run: |
-          echo "Checking 64-bit output for ${{ matrix.name }}"
-          DIR="export/release/${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'macos' }}/bin"
-          ls -la "$DIR"
-        shell: bash
+#      - name: Check 64-bit Output
+#        run: |
+#          echo "Checking 64-bit output for ${{ matrix.name }}"
+#          DIR="export/release/${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'macos' }}/bin"
+#          ls -la "$DIR"
+#        shell: bash
 
   upload_64bit:
     runs-on: ${{ matrix.os }}
@@ -108,9 +108,9 @@ jobs:
         with:
           name: UPF-${{ matrix.name }}-x64
           path: |
-            ${{ matrix.name == 'Windows' && 'export/release/windows/bin' || '' }}
-            ${{ matrix.name == 'Linux' && 'export/release/linux/bin' || '' }}
-            ${{ matrix.name == 'macOS' && 'export/release/macos/bin' || '' }}
+            ${{ matrix.name == 'Windows' && 'export\release\windows\bin' || '' }}
+            ${{ matrix.name == 'Linux' && './export/release/' || '' }}
+            ${{ matrix.name == 'macOS' && './export/release/' || '' }}
 
   build_32bit:
     runs-on: ${{ matrix.os }}
@@ -178,12 +178,12 @@ jobs:
             --app-version="4.0.0-${{ github.run_id }}"
         shell: bash
 
-      - name: Check 32-bit Output
-        run: |
-          echo "Checking 32-bit output for ${{ matrix.name }}"
-          DIR="export/release/${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'macos' }}/bin"
-          ls -la "$DIR"
-        shell: bash
+#      - name: Check 32-bit Output
+#        run: |
+#          echo "Checking 32-bit output for ${{ matrix.name }}"
+#          DIR="export/release/${{ matrix.name == 'Windows' && 'windows' || matrix.name == 'Linux' && 'linux' || 'macos' }}/bin"
+#          ls -la "$DIR"
+#        shell: bash
 
   upload_32bit:
     runs-on: ${{ matrix.os }}
@@ -204,6 +204,6 @@ jobs:
         with:
           name: UPF-${{ matrix.name }}-x86
           path: |
-            ${{ matrix.name == 'Windows' && 'export/release/windows/bin' || '' }}
-            ${{ matrix.name == 'Linux' && 'export/release/linux/bin' || '' }}
-            ${{ matrix.name == 'macOS' && 'export/release/macos/bin' || '' }}
+            ${{ matrix.name == 'Windows' && 'export\32bit\windows\bin' || '' }}
+            ${{ matrix.name == 'Linux' && './export/32bit/' || '' }}
+            ${{ matrix.name == 'macOS' && './export/32bit/' || '' }}
