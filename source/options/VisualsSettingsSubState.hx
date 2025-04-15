@@ -144,34 +144,6 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 		option.onChange = onChangeWindowBar;
 		#end
 		
-		var PM:Array<String> = Mods.mergeAllTextsNamed('music/PM_list.txt');
-		if(PM.length > 0)
-		{
-			if(!PM.contains(ClientPrefs.data.pauseMusic))
-				ClientPrefs.data.pauseMusic = ClientPrefs.defaultData.pauseMusic;
-		}
-		var option:Option = new Option('Pause Music:',
-			"What song do you prefer for the Pause Screen?",
-			'pauseMusic',
-			STRING,
-			PM);
-		addOption(option);
-		option.onChange = onChangePauseMusic;
-
-		var TM:Array<String> = Mods.mergeAllTextsNamed('music/Menu_list.txt');
-		if(TM.length > 0)
-		{
-			if(!TM.contains(ClientPrefs.data.daMenuMusic))
-				ClientPrefs.data.daMenuMusic = ClientPrefs.defaultData.daMenuMusic;
-		}
-		var option:Option = new Option('Menu Music:',
-			"What song do you prefer for the Menus?",
-			'daMenuMusic',
-			STRING,
-			TM);
-		addOption(option);
-		option.onChange = onChangeMenuMusic;
-		
 		#if CHECK_FOR_UPDATES
 		var option:Option = new Option('Check for Updates',
 			'On Release builds, turn this on to check for updates when you start the game.',
@@ -234,17 +206,6 @@ class VisualsSettingsSubState extends BaseOptionsMenu
 				}
 				notesShown = false;
 		}
-	}
-
-	var changedMusic:Bool = false;
-	function onChangePauseMusic()
-	{
-		if(ClientPrefs.data.pauseMusic == 'None')
-			FlxG.sound.music.volume = 0;
-		else
-			FlxG.sound.playMusic(Paths.music(Paths.formatToSongPath(ClientPrefs.data.pauseMusic)));
-
-		changedMusic = true;
 	}
 
 #if windows	
@@ -337,15 +298,6 @@ function onChangeWindowBar() {
 					splash.animation.curAnim.frameRate = FlxG.random.int(minFps, maxFps);
 			}
 		}
-
-
-	var menuMusicChanged:Bool = false;
-	function onChangeMenuMusic()
-	{
-			if (ClientPrefs.data.daMenuMusic != 'Default') FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.data.daMenuMusic));
-			if (ClientPrefs.data.daMenuMusic == 'Default') FlxG.sound.playMusic(Paths.music('freakyMenu'));
-		menuMusicChanged = true;
-	}
 
 	override function destroy()
 	{
