@@ -301,9 +301,6 @@ function onChangeWindowBar() {
 
 	override function destroy()
 	{
-		if (!OptionsState.onPlayState && (changedMusic || menuMusicChanged)) FlxG.sound.playMusic(Paths.music('Options'));
-		// if(changedMusic && !OptionsState.onPlayState) FlxG.sound.playMusic(Paths.music('freakyMenu-' + ClientPrefs.data.daMenuMusic), 1, true);
-		// else if (!OptionsState.onPlayState && (changedMusic || menuMusicChanged)) FlxG.sound.playMusic(Paths.music('Options'));
 		Note.globalRgbShaders = [];
 		super.destroy();
 	}
