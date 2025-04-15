@@ -45,57 +45,6 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 			BOOL);
 		addOption(option);
 
-		var option:Option = new Option('Opponent Hitsound Volume',
-			'Funny notes make a sound when the Opponents hit them.',
-			'opphitsoundVolume',
-			PERCENT);
-		addOption(option);
-		option.scrollSpeed = 1.6;
-		option.minValue = 0.0;
-		option.maxValue = 1;
-		option.changeValue = 0.1;
-		option.decimals = 1;
-		option.onChange = onChangeOppHitsoundVolume;
-
-		var opphitSounds:Array<String> = Mods.mergeAllTextsNamed('sounds/hitsounds/list.txt');
-		if(opphitSounds.length > 0)
-		{
-			if(!opphitSounds.contains(ClientPrefs.data.oppHitsoundType))
-				ClientPrefs.data.oppHitsoundType = ClientPrefs.defaultData.oppHitsoundType;
-		}
-		var option:Option = new Option(Language.getPhrase('setting_dad_note',"Opponent Hitsound Type:"), 
-			"Change the Opponents hitsound type",
-			'oppHitsoundType',
-			STRING,
-			opphitSounds);
-		addOption(option);
-		option.onChange = onChangeOppHitSound;
-
-		var option:Option = new Option('Player Hitsound Volume',
-			'Funny notes make a sound when you hit them.',
-			'hitsoundVolume',
-			PERCENT);
-		addOption(option);
-		option.scrollSpeed = 1.6;
-		option.minValue = 0.0;
-		option.maxValue = 1;
-		option.changeValue = 0.1;
-		option.decimals = 1;
-		option.onChange = onChangeHitsoundVolume;
-
-		var pphitSounds:Array<String> = Mods.mergeAllTextsNamed('sounds/hitsounds/list.txt');
-		if(pphitSounds.length > 0)
-		{
-			if(!pphitSounds.contains(ClientPrefs.data.hitsoundType))
-				ClientPrefs.data.hitsoundType = ClientPrefs.defaultData.hitsoundType;
-		var option:Option = new Option(Language.getPhrase('setting_player_note', "Player Hitsound Type:"), 
-			"Change the Players hitsound type",
-			'hitsoundType',
-			STRING,
-			pphitSounds);
-		addOption(option);
-		option.onChange = onChangeHitSound;
-		}
 
 		var option:Option = new Option(Language.getPhrase('setting_combo', "Combo Sprite:"),
 		'Do you want the combo sprite to be shown?',
@@ -175,27 +124,7 @@ class GameplaySettingsSubState extends BaseOptionsMenu
 
 		super();
 	}
-
-	function onChangeHitSound()
-	{
-		FlxG.sound.play(Paths.sound("hitsounds/" + "hitsound-" + ClientPrefs.data.hitsoundType), ClientPrefs.data.hitsoundVolume);
-	}
-
-	function onChangeOppHitSound()
-	{
-		FlxG.sound.play(Paths.sound("hitsounds/" + "hitsound-" + ClientPrefs.data.oppHitsoundType), ClientPrefs.data.opphitsoundVolume);
-	}
-
-	function onChangeHitsoundVolume()
-	{
-		FlxG.sound.play(Paths.sound("hitsounds/" + "hitsound-" + ClientPrefs.data.hitsoundType), ClientPrefs.data.hitsoundVolume);
-	}
-
-	function onChangeOppHitsoundVolume()
-	{
-		FlxG.sound.play(Paths.sound("hitsounds/" + "hitsound-" + ClientPrefs.data.oppHitsoundType), ClientPrefs.data.opphitsoundVolume);
-	}
-
+	
 	function onChangeAutoPause()
 	{
 		FlxG.autoPause = ClientPrefs.data.autoPause;
