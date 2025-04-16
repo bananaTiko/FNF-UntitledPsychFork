@@ -10,9 +10,9 @@ class OptionsState extends MusicBeatState
 		'Controls',
 		'Adjust Delay and Combo',
 		'Graphics',
+		'Audio',
 		'Visuals',
-		'Gameplay',
-		'Audio'
+		'Gameplay'
 		#if TRANSLATIONS_ALLOWED , 'Language' #end
 	];
 	private var grpOptions:FlxTypedGroup<Alphabet>;
