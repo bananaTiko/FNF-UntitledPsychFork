@@ -1,5 +1,27 @@
-# Friday Night Funkin' - Untitled Psych Fork
-Modified Version version of Psych orignal meant to Inprove and not be a replacement
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://github.com/bananaTiko/FNF-UntitledPsychFork">
+    <img src="https://github.com/bananaTiko/FNF-UntitledPsychFork/blob/6abe7a0dedc69791627e334672a142f7b7915d2c/docs/img/UPF-Logo.png" alt="Logo" width="300" height="223">
+  </a>
+
+<h3 align="center">Untitled Psych Fork</h3>
+
+  <p align="center">
+    What if Shadow Mario made Psych Engine to include features from newer versions of FNF (also known as V-Slice)
+    <br />
+    <a href="https://github.com/bananaTiko/FNF-UntitledPsychFork/wiki"><strong>Explore the Wiki »</strong></a>
+    <br />
+    <br />
+    ·
+    <a href="https://github.com/bananaTiko/FNF-UntitledPsychFork/issues">Report Bug or Request Feature</a>
+    ·
+    <a href="https://github.com/bananaTiko/FNF-UntitledPsychFork//pulls">Create Pull Request</a>
+  </p>
+</div>
+
+#### Made With
+<img src="https://img.shields.io/badge/-HAXE-262626.svg?logo=haxe&style=for-the-badge">
 
 ## Installation:
 
@@ -73,7 +95,7 @@ _____________________________________
   * Also there's the Background girls being spooky during the "Hey!" parts of the Instrumental
 
 ## Cool new Chart Editor changes and countless bug fixes
-![](https://github.com/ShadowMario/FNF-PsychEngine/blob/main/docs/img/chart.png?raw=true)
+![Chart Editor](https://github.com/bananaTiko/FNF-UntitledPsychFork/blob/6abe7a0dedc69791627e334672a142f7b7915d2c/docs/img/chart.png?raw=true)
 * You can now chart "Event" notes, which are bookmarks that trigger specific actions that usually were hardcoded on the vanilla version of the game.
 * Your song's BPM can now have decimal values
 * You can manually adjust a Note's strum time if you're really going for milisecond precision
@@ -85,16 +107,16 @@ _____________________________________
   * No Animation: Character just hits the note, no animation plays.
 
 ## Multiple editors to assist you in making your own Mod
-![Screenshot_3](https://user-images.githubusercontent.com/44785097/144629914-1fe55999-2f18-4cc1-bc70-afe616d74ae5.png)
+![Editor Screen](https://user-images.githubusercontent.com/44785097/144629914-1fe55999-2f18-4cc1-bc70-afe616d74ae5.png)
 * Working both for Source code modding and Downloaded builds!
 
 ## Story mode menu rework:
-![](https://i.imgur.com/UB2EKpV.png)
+![Story Menu](https://github.com/bananaTiko/FNF-UntitledPsychFork/blob/6abe7a0dedc69791627e334672a142f7b7915d2c/docs/img/story_menu.png?raw=true)
 * Added a different BG to every song (less Tutorial)
 * All menu characters are now in individual spritesheets, makes modding it easier.
 
 ## Credits menu
-![Screenshot_1](https://user-images.githubusercontent.com/44785097/144632635-f263fb22-b879-4d6b-96d6-865e9562b907.png)
+![Credits menu](https://github.com/bananaTiko/FNF-UntitledPsychFork/blob/6abe7a0dedc69791627e334672a142f7b7915d2c/docs/img/credits_menu.png?raw=true)
 * You can add a head icon, name, description and a Redirect link for when the player presses Enter while the item is currently selected.
 
 ## Awards/Achievements
