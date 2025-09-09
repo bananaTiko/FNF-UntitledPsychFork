@@ -146,17 +146,17 @@ _____________________________________
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- Reference-style links for shields -->
-[contributors-shield]: https://img.shields.io/github/contributors/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
-[contributors-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/graphs/contributors
+[contributors-shield]: https://img.shields.io/github/contributors/bananaTiko/FNF-UntitledPsychFork.svg?style=for-the-badge
+[contributors-url]: https://github.com/bananaTiko/FNF-UntitledPsychFork/graphs/contributors
 
-[forks-shield]: https://img.shields.io/github/forks/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
-[forks-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/network/members
+[forks-shield]: https://img.shields.io/github/forks/bananaTiko/FNF-UntitledPsychFork.svg?style=for-the-badge
+[forks-url]: https://github.com/bananaTiko/FNF-UntitledPsychFork/network/members
 
-[stars-shield]: https://img.shields.io/github/stars/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
-[stars-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/stargazers
+[stars-shield]: https://img.shields.io/github/stars/bananaTiko/FNF-UntitledPsychFork.svg?style=for-the-badge
+[stars-url]: https://github.com/bananaTiko/FNF-UntitledPsychFork/stargazers
 
-[issues-shield]: https://img.shields.io/github/issues/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
-[issues-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/issues
+[issues-shield]: https://img.shields.io/github/issues/bananaTiko/FNF-UntitledPsychFork.svg?style=for-the-badge
+[issues-url]: https://github.com/bananaTiko/FNF-UntitledPsychFork/issues
 
-[license-shield]: https://img.shields.io/github/license/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
-[license-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/blob/master/LICENSE.txt
+[license-shield]: https://img.shields.io/github/license/bananaTiko/FNF-UntitledPsychFork.svg?style=for-the-badge
+[license-url]: https://github.com/bananaTiko/FNF-UntitledPsychFork/blob/master/LICENSE.txt
