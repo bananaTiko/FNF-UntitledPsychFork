@@ -1,3 +1,12 @@
+<a id="readme-top"></a>
+
+<!-- PROJECT SHIELDS -->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -133,3 +142,21 @@ _____________________________________
 * You can reset your Score on Freeplay/Story Mode by pressing Reset button.
 * You can listen to a song or adjust Scroll Speed/Damage taken/etc. on Freeplay by pressing Space.
 * You can enable "Combo Stacking" in Gameplay Options. This causes the combo sprites to just be one sprite with an animation rather than sprites spawning each note hit.
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- Reference-style links for shields -->
+[contributors-shield]: https://img.shields.io/github/contributors/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
+[contributors-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/graphs/contributors
+
+[forks-shield]: https://img.shields.io/github/forks/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
+[forks-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/network/members
+
+[stars-shield]: https://img.shields.io/github/stars/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
+[stars-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/stargazers
+
+[issues-shield]: https://img.shields.io/github/issues/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
+[issues-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/issues
+
+[license-shield]: https://img.shields.io/github/license/bananaTiko/FNF-Untitled-Psych-Fork.svg?style=for-the-badge
+[license-url]: https://github.com/bananaTiko/FNF-Untitled-Psych-Fork/blob/master/LICENSE.txt
