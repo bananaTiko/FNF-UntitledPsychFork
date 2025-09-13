@@ -15,7 +15,9 @@
   </a>
 
 <h3 align="center">Untitled Psych Fork</h3>
+</div>
 
+<div align="center">
   <p align="center">
     What if Shadow Mario made Psych Engine to include features from newer versions of FNF (also known as V-Slice)
     <br />
@@ -28,6 +30,10 @@
     <a href="https://github.com/bananaTiko/FNF-UntitledPsychFork//pulls">Create Pull Request</a>
   </p>
 </div>
+
+> [!WARNING]  
+> This project is currently in alpha.  
+> Any changes that remove features are not my responsibility.
 
 #### Made With
 <img src="https://img.shields.io/badge/-HAXE-262626.svg?logo=haxe&style=for-the-badge">
@@ -129,7 +135,7 @@ _____________________________________
 * You can add a head icon, name, description and a Redirect link for when the player presses Enter while the item is currently selected.
 
 ## Awards/Achievements
-* The engine comes with 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
+* The engine comes with over 16 example achievements that you can mess with and learn how it works (Check Achievements.hx and search for "checkForAchievement" on PlayState.hx)
 
 ## Options menu:
 * You can change Note colors, Delay and Combo Offset, Controls and Preferences there.
