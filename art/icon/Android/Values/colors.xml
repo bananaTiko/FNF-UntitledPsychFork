@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Purples -->
+    <color name="purple_200">#BB86FC</color>
+    <color name="purple_500">#6200EE</color>
+    <color name="purple_700">#3700B3</color>
+    <color name="opaque_purple">#62E</color>
+    <color name="translucent_purple">#806200EE</color>
+
+    <!-- Teals -->
+    <color name="teal_200">#03DAC5</color>
+    <color name="teal_500">#03DAC5</color>
+    <color name="teal_700">#018786</color>
+    <color name="opaque_teal">#18786</color>
+    <color name="translucent_teal">#80018786</color>
+
+    <!-- Basics -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="opaque_black">#000</color>
+    <color name="translucent_black">#80000000</color>
+    <color name="opaque_white">#FFF</color>
+    <color name="translucent_white">#80FFFFFF</color>
+
+    <!-- Blues -->
+    <color name="blue_200">#90CAF9</color>
+    <color name="blue_500">#2196F3</color>
+    <color name="blue_700">#1976D2</color>
+    <color name="opaque_blue">#23F</color>
+    <color name="translucent_blue">#802196F3</color>
+
+    <!-- Reds -->
+    <color name="red_200">#EF9A9A</color>
+    <color name="red_500">#F44336</color>
+    <color name="red_700">#D32F2F</color>
+    <color name="opaque_red">#F43</color>
+    <color name="translucent_red">#80F44336</color>
+
+    <!-- Greens -->
+    <color name="green_200">#A5D6A7</color>
+    <color name="green_500">#4CAF50</color>
+    <color name="green_700">#388E3C</color>
+    <color name="opaque_green">#4C5</color>
+    <color name="translucent_green">#804CAF50</color>
+
+    <!-- Yellows -->
+    <color name="yellow_200">#FFF59D</color>
+    <color name="yellow_500">#FFEB3B</color>
+    <color name="yellow_700">#FBC02D</color>
+    <color name="opaque_yellow">#FE3</color>
+    <color name="translucent_yellow">#80FFEB3B</color>
+
+    <!-- Oranges -->
+    <color name="orange_200">#FFCC80</color>
+    <color name="orange_500">#FF9800</color>
+    <color name="orange_700">#FB8C00</color>
+    <color name="opaque_orange">#F90</color>
+    <color name="translucent_orange">#80FF9800</color>
+
+    <!-- Grays -->
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_700">#616161</color>
+    <color name="opaque_gray">#999</color>
+    <color name="translucent_gray">#809E9E9E</color>
+</resources>
